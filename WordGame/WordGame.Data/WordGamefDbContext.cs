@@ -6,7 +6,7 @@ using WordGame.Models;
 
 namespace WordGame.Data
 {
-    public class WordGameDbContext : IdentityDbContext<IdentityUser>, IWordGameDbContext
+    public class WordGameDbContext : IdentityDbContext<User>, IWordGameDbContext
     {
         public WordGameDbContext() : this("WordGameDb")
         {
@@ -19,21 +19,9 @@ namespace WordGame.Data
             //Database.SetInitializer(new DropCreateDatabaseAlways<LeafDbContext>());
         }
 
-        public virtual IDbSet<Test> Tests { get; set; }
+        public virtual IDbSet<Thread> Threads { get; set; }
 
-        public virtual IDbSet<Topic> Topics { get; set; }
-
-        public virtual IDbSet<Category> Categories { get; set; }
-
-        public virtual IDbSet<Question> Questions { get; set; }
-
-        public virtual IDbSet<Answer> Answers { get; set; }
-
-        public virtual IDbSet<AnsweredQuestion> AnsweredQuestions { get; set; }
-
-        public virtual IDbSet<Submission> Submissions { get; set; }
-
-        public virtual IDbSet<CategoryStatistic> CategoryStatistics { get; set; }
+        public virtual IDbSet<Post> Posts { get; set; }
 
         public static WordGameDbContext Create()
         {

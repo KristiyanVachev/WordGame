@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using WordGame.Models;
+﻿//using System.Collections.Generic;
+//using WordGame.Models;
 
-namespace WordGame.Services.Utilities.Contracts
-{
-    public interface IQuestionUtility
-    {
-        IEnumerable<Question> GetQuestions();
+//namespace WordGame.Services.Utilities.Contracts
+//{
+//    public interface IQuestionUtility
+//    {
+//        IEnumerable<Post> GetQuestions();
 
-        Question CreateQuestion(Submission submission);
+//        Post CreateQuestion(Submission submission);
 
-        Question GetById(int id);
-    }
-}
+//        Post GetById(int id);
+//    }
+//}

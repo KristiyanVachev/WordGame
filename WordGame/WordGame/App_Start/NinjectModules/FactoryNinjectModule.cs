@@ -9,7 +9,6 @@ namespace Leaf.Web.App_Start.NinjectModules
         public override void Load()
         {
             this.Bind<ITestFactory>().ToFactory().InSingletonScope();
-            this.Bind<ISubmitFactory>().ToFactory().InSingletonScope();
             this.Bind<IQuestionFactory>().ToFactory().InSingletonScope();
             this.Bind<IUserFactory>().ToFactory().InSingletonScope();
         }

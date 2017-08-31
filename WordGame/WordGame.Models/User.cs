@@ -5,39 +5,31 @@ namespace WordGame.Models
 {
     public class User : IdentityUser
     {
-        private ICollection<Test> tests;
-        private ICollection<Submission> submissions;
-        private ICollection<CategoryStatistic> categoryStatistics;
+        private ICollection<Thread> threads;
+        private ICollection<Post> posts;
 
         public User()
         {
-            this.tests = new HashSet<Test>();
-            this.submissions = new HashSet<Submission>();
-            this.categoryStatistics = new HashSet<CategoryStatistic>();
+            this.threads = new HashSet<Thread>();
+            this.posts = new HashSet<Post>();
         }
 
-        public User(string userName) 
-            : this()
+        public User(string username) : this()
         {
-            this.UserName = userName;
+            this.UserName = username;
         }
         
-        public virtual ICollection<Test> Tests
+        public virtual ICollection<Thread> Threads
         {
-            get { return this.tests; }
-            set { this.tests = value; }
+            get { return this.threads; }
+            set { this.threads = value; }
         }
 
-        public virtual ICollection<Submission> Submissions
+        public virtual ICollection<Post> Posts
         {
-            get { return this.submissions; }
-            set { this.submissions = value; }
+            get { return this.posts; }
+            set { this.posts = value; }
         }
 
-        public virtual ICollection<CategoryStatistic> CategoryStatistics
-        {
-            get { return this.categoryStatistics; }
-            set { this.categoryStatistics = value; }
-        }
     }
 }
