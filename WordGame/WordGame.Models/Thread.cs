@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WordGame.Models
@@ -13,12 +12,15 @@ namespace WordGame.Models
             this.posts = new HashSet<Post>();
         }
 
-        public Thread(int userId) : this()
+        public Thread(int userId, string name) : this()
         {
             this.UserId = userId;
+            this.Name = name;
         }
 
         public int Id { get; set; }
+
+        public string Name { get; set; }
 
         public int WordCount { get; set; }
 

@@ -22,7 +22,6 @@ namespace WordGame.Controllers
             this.userService = userService;
         }
 
-        // GET api/users
         [Route("api/users/register")]
         [HttpPost]
         public Task<HttpResponseMessage> Register([FromBody] NewUser newUserInfo)

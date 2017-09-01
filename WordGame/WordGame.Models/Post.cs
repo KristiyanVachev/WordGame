@@ -5,12 +5,7 @@ namespace WordGame.Models
 {
     public class Post
     {
-        public Post()
-        {
-
-        }
-
-        public Post(int userId, int threadId, string word) : this()
+        public Post(int userId, int threadId, string word)
         {
             this.UserId = userId;
             this.ThreadId = threadId;

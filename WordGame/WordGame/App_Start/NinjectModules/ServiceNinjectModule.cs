@@ -8,9 +8,8 @@ namespace Leaf.Web.App_Start.NinjectModules
     {
         public override void Load()
         {
-            //this.Bind<ITestUtility>().To<TestUtility>();
-            //this.Bind<IQuestionUtility>().To<QuestionUtility>();
             this.Bind<IUserService>().To<UserService>();
+            this.Bind<IThreadService>().To<ThreadService>();
         }
     }
 }
