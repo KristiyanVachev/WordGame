@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace WordGame.Models
 {
-    public class User : IdentityUser
+    public class User
     {
         private ICollection<Thread> threads;
         private ICollection<Post> posts;
@@ -14,11 +13,26 @@ namespace WordGame.Models
             this.posts = new HashSet<Post>();
         }
 
-        public User(string username) : this()
+        public User(string userName, string passwordHash, string fullName, string email) : this()
         {
-            this.UserName = username;
+            this.UserName = userName;
+            this.PasswordHash = passwordHash;
+            this.FullName = fullName;
+            this.Email = email;
         }
-        
+
+        public int Id { get; set; }
+
+        public string UserName { get; set; }
+
+        public string PasswordHash { get; set; }
+
+        public string FullName { get; set; }
+
+        public string Email { get; set; }
+
+        public bool IsAdmin { get; set; }
+
         public virtual ICollection<Thread> Threads
         {
             get { return this.threads; }
@@ -30,6 +44,5 @@ namespace WordGame.Models
             get { return this.posts; }
             set { this.posts = value; }
         }
-
     }
 }

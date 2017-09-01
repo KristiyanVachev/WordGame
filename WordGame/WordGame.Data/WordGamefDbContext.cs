@@ -6,7 +6,7 @@ using WordGame.Models;
 
 namespace WordGame.Data
 {
-    public class WordGameDbContext : IdentityDbContext<User>, IWordGameDbContext
+    public class WordGameDbContext : DbContext, IWordGameDbContext
     {
         public WordGameDbContext() : this("WordGameDb")
         {
@@ -22,6 +22,8 @@ namespace WordGame.Data
         public virtual IDbSet<Thread> Threads { get; set; }
 
         public virtual IDbSet<Post> Posts { get; set; }
+
+        public virtual IDbSet<User> Users { get; set; }
 
         public static WordGameDbContext Create()
         {

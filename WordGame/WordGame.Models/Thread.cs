@@ -13,7 +13,7 @@ namespace WordGame.Models
             this.posts = new HashSet<Post>();
         }
 
-        public Thread(string userId) : this()
+        public Thread(int userId) : this()
         {
             this.UserId = userId;
         }
@@ -23,7 +23,7 @@ namespace WordGame.Models
         public int WordCount { get; set; }
 
         //Author
-        public string UserId { get; set; }
+        public int? UserId { get; set; }
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
