@@ -9,5 +9,7 @@ namespace WordGame.Services.Contracts
         string Login(string userName, string password);
 
         bool Logout(string authKey);
+
+        bool Delete(string authKey, string password);
     }
 }

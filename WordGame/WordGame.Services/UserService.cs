@@ -116,5 +116,27 @@ namespace WordGame.Services
 
             return true;
         }
+
+        public bool Delete(string authKey, string password)
+        {
+            var user = this.userRepository.Entities.FirstOrDefault(x => x.AuthKey == authKey);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            var passwordHash = this.CreateHash(password);
+            if (passwordHash != user.PasswordHash)
+            {
+                return false;
+            }
+
+            //TODO delete everything else
+            this.userRepository.Delete(user);
+            this.unitOfWork.Commit();
+
+            return true;
+        }
     }
 }

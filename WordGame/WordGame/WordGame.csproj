@@ -211,6 +211,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Delete.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Logout.cs" />
     <Compile Include="Models\NewUser.cs" />

@@ -90,6 +90,26 @@ namespace WordGame.Controllers
             return Task.FromResult(Request.CreateResponse(HttpStatusCode.NotFound));
         }
 
+
+        [Route("api/users/delete")]
+        [HttpDelete]
+        public Task<HttpResponseMessage> Delete([FromBody] Delete delete)
+        {
+            if (delete == null)
+            {
+                return Task.FromResult(Request.CreateResponse(HttpStatusCode.BadRequest));
+            }
+
+            var result = this.userService.Delete(delete.AuthKey, delete.Password);
+
+            if (result)
+            {
+                return Task.FromResult(Request.CreateResponse(HttpStatusCode.OK));
+            }
+
+            return Task.FromResult(Request.CreateResponse(HttpStatusCode.Unauthorized));
+        }
+
         [HttpGet]
         public Task<HttpResponseMessage> Get(int id)
         {
