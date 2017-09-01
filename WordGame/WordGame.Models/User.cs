@@ -19,6 +19,7 @@ namespace WordGame.Models
             this.PasswordHash = passwordHash;
             this.FullName = fullName;
             this.Email = email;
+            this.AuthKey = string.Empty;
         }
 
         public int Id { get; set; }
@@ -32,6 +33,8 @@ namespace WordGame.Models
         public string Email { get; set; }
 
         public bool IsAdmin { get; set; }
+
+        public string AuthKey { get; set; }
 
         public virtual ICollection<Thread> Threads
         {

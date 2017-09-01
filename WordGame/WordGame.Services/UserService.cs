@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -72,6 +73,8 @@ namespace WordGame.Services
 
         public string Login(string userName, string password)
         {
+            string authKey = Guid.NewGuid().ToString();
+
             throw new System.NotImplementedException();
         }
     }

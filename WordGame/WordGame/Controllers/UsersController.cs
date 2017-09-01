@@ -24,22 +24,29 @@ namespace WordGame.Controllers
 
         // GET api/users
         [HttpPost]
-        public Task<HttpResponseMessage> Index([FromBody] User newUser)
+        public Task<HttpResponseMessage> Index([FromBody] NewUser newUserInfo)
         {
-            //TODO create a separate model for request, here passwordHash is the normal password
+            //TODO check if user exists, if it does return something else
 
-            //check if user exists, if it does return something else
-
-            var registeredUser = this.userService.Register(
-                newUser.UserName, 
-                newUser.PasswordHash,
-                newUser.FullName,
-                newUser.Email
+            var user = this.userService.Register(
+                newUserInfo.UserName, 
+                newUserInfo.Password,
+                newUserInfo.FullName,
+                newUserInfo.Email
                 );
 
-            if (registeredUser != null)
+            if (user != null)
             {
-                return Task.FromResult(Request.CreateResponse(HttpStatusCode.Created));
+                var registeredUser = new RegisteredUser(
+                    user.Id,
+                    user.UserName,
+                    user.PasswordHash,
+                    user.FullName,
+                    user.Email, 
+                    user.IsAdmin
+                    );
+                
+                return Task.FromResult(Request.CreateResponse(HttpStatusCode.Created, registeredUser));
 
             }
             else
@@ -47,9 +54,13 @@ namespace WordGame.Controllers
                 return Task.FromResult(Request.CreateResponse(HttpStatusCode.Conflict));
             }
 
-
-
         }
+
+        //[HttpPost]
+        //public Task<HttpResponseMessage> Login([FromBody] User newUser)
+        //{
+                
+        //}
 
         [HttpGet]
         public Task<HttpResponseMessage> Get(int id)
