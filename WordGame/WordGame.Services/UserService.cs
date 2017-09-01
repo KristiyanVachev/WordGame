@@ -100,5 +100,21 @@ namespace WordGame.Services
             //Incorrect password
             return string.Empty;
         }
+
+        public bool Logout(string authKey)
+        {
+            var user = this.userRepository.Entities.FirstOrDefault(x => x.AuthKey == authKey);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            user.AuthKey = string.Empty;
+            this.userRepository.Update(user);
+            this.unitOfWork.Commit();
+
+            return true;
+        }
     }
 }

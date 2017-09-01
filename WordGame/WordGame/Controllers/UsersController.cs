@@ -71,6 +71,25 @@ namespace WordGame.Controllers
             return Task.FromResult(Request.CreateResponse(HttpStatusCode.Forbidden));
         }
 
+        [Route("api/users/logout")]
+        [HttpDelete]
+        public Task<HttpResponseMessage> Logout([FromBody] Logout logout)
+        {
+            if (logout == null || logout.AuthKey == string.Empty)
+            {
+                return Task.FromResult(Request.CreateResponse(HttpStatusCode.BadRequest));
+            }
+
+            var result = this.userService.Logout(logout.AuthKey);       
+            
+            if (result)
+            {
+                return Task.FromResult(Request.CreateResponse(HttpStatusCode.OK));
+            }
+
+            return Task.FromResult(Request.CreateResponse(HttpStatusCode.NotFound));
+        }
+
         [HttpGet]
         public Task<HttpResponseMessage> Get(int id)
         {
