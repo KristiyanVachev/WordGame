@@ -73,9 +73,32 @@ namespace WordGame.Services
 
         public string Login(string userName, string password)
         {
-            string authKey = Guid.NewGuid().ToString();
+            var user = this.userRepository.Entities.FirstOrDefault(x => x.UserName == userName);
 
-            throw new System.NotImplementedException();
+            //If user exists
+            if (user == null)
+            {
+                //TODO not user found
+                return string.Empty;
+            }
+
+            //Password is correct
+            var loginHash = this.CreateHash(password);
+
+            if (user.PasswordHash == loginHash)
+            {
+                var authKey = Guid.NewGuid().ToString();
+
+                user.AuthKey = authKey;
+
+                this.userRepository.Update(user);
+                this.unitOfWork.Commit();
+
+                return authKey;
+            }
+
+            //Incorrect password
+            return string.Empty;
         }
     }
 }
