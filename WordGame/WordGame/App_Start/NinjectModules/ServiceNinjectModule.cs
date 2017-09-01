@@ -1,6 +1,6 @@
 ﻿using Ninject.Modules;
-using WordGame.Services.Utilities;
-using WordGame.Services.Utilities.Contracts;
+using WordGame.Services;
+using WordGame.Services.Contracts;
 
 namespace Leaf.Web.App_Start.NinjectModules
 {
@@ -10,7 +10,7 @@ namespace Leaf.Web.App_Start.NinjectModules
         {
             //this.Bind<ITestUtility>().To<TestUtility>();
             //this.Bind<IQuestionUtility>().To<QuestionUtility>();
-            this.Bind<IUserUtility>().To<UserUtility>();
+            this.Bind<IUserService>().To<UserService>();
         }
     }
 }

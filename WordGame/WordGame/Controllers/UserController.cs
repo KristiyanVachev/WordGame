@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Linq;
 using System.Web.Http;
-using WordGame.Services.Utilities.Contracts;
+using WordGame.Services.Contracts;
 
 namespace WordGame.Controllers
 {
     public class UserController : ApiController
     {
-        private IUserUtility userService;
+        private IUserService userService;
 
-        public UserController(IUserUtility userService)
+        public UserController(IUserService userService)
         {
             if (userService == null)
             {
@@ -22,7 +21,8 @@ namespace WordGame.Controllers
         // GET api/user
         public string Get()
         {
-            return userService.GetAll().FirstOrDefault().UserName;
+            return userService.Register("dolphin", "gupa", "Dolphin Fin", "fun@sea.oc").UserName;
+            
         }
     }
 }
