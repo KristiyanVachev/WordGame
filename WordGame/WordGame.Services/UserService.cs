@@ -63,7 +63,17 @@ namespace WordGame.Services
         {
             string passwordHash = this.CreateHash(password);
 
+            if (userRepository.Entities.Any(x => x.UserName == userName))
+            {
+                throw new ArgumentException();
+            }
+
             User newUser = this.userFactory.Register(userName, passwordHash, fullName, email);
+
+            if (!userRepository.Entities.Any())
+            {
+                newUser.IsAdmin = true;
+            }
 
             this.userRepository.Add(newUser);
             this.unitOfWork.Commit();

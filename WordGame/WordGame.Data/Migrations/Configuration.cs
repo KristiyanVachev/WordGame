@@ -17,32 +17,7 @@ namespace WordGame.Data.Migrations
 
         protected override void Seed(WordGameDbContext context)
         {
-            if (context.Users.Any())
-            {
-                return;
-            }
-           
-            if (!(context.Users.Any(u => u.UserName == "typhon")))
-            {
-                //var userStore = new UserStore<User>(context);
-                //var userManager = new UserManager<User>(userStore);
-                //var userToInsert = new User { UserName = "typhon", Email = "typhon04@gmail.com" };
-                //userManager.Create(userToInsert, "nanana");
-
-                context.Users.AddOrUpdate(
-                    t => t.Id,
-                    new User {
-                        Id = 0,
-                        UserName = "Koala",
-                        PasswordHash = "GDHJF",
-                        FullName = "Koala Square",
-                        Email = "eucalytus@forest.au"
-                    }
-                );
-            }
-
             
-            context.SaveChanges();
         }
     }
 }

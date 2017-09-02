@@ -26,14 +26,21 @@ namespace WordGame.Controllers
         [HttpPost]
         public Task<HttpResponseMessage> Register([FromBody] NewUser newUserInfo)
         {
-            //TODO check if user exists, if it does return something else
+            User user;
 
-            var user = this.userService.Register(
-                newUserInfo.UserName, 
-                newUserInfo.Password,
-                newUserInfo.FullName,
-                newUserInfo.Email
-                );
+            try
+            {
+                user = this.userService.Register(
+                   newUserInfo.UserName,
+                   newUserInfo.Password,
+                   newUserInfo.FullName,
+                   newUserInfo.Email
+                   );
+            }
+            catch (ArgumentException)
+            {
+                return Task.FromResult(Request.CreateResponse(HttpStatusCode.Conflict));
+            }
 
             if (user != null)
             {
@@ -42,10 +49,10 @@ namespace WordGame.Controllers
                     user.UserName,
                     user.PasswordHash,
                     user.FullName,
-                    user.Email, 
+                    user.Email,
                     user.IsAdmin
                     );
-                
+
                 return Task.FromResult(Request.CreateResponse(HttpStatusCode.Created, registeredUser));
 
             }
@@ -79,8 +86,8 @@ namespace WordGame.Controllers
                 return Task.FromResult(Request.CreateResponse(HttpStatusCode.BadRequest));
             }
 
-            var result = this.userService.Logout(logout.AuthKey);       
-            
+            var result = this.userService.Logout(logout.AuthKey);
+
             if (result)
             {
                 return Task.FromResult(Request.CreateResponse(HttpStatusCode.OK));
