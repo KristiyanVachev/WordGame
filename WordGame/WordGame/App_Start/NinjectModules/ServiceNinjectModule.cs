@@ -10,6 +10,7 @@ namespace Leaf.Web.App_Start.NinjectModules
         {
             this.Bind<IUserService>().To<UserService>();
             this.Bind<IThreadService>().To<ThreadService>();
+            this.Bind<IReportService>().To<ReportService>();
         }
     }
 }

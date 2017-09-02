@@ -20,6 +20,8 @@ namespace WordGame.Models
 
         public string Word { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         //Author
         public int? UserId { get; set; }
 

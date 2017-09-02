@@ -10,6 +10,7 @@ namespace Leaf.Web.App_Start.NinjectModules
         {
             this.Bind<IUserFactory>().ToFactory().InSingletonScope();
             this.Bind<IThreadFactory>().ToFactory().InSingletonScope();
+            this.Bind<IReportFactory>().ToFactory().InSingletonScope();
         }
     }
 }

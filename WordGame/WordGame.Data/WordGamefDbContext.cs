@@ -25,6 +25,8 @@ namespace WordGame.Data
 
         public virtual IDbSet<User> Users { get; set; }
 
+        public virtual IDbSet<Report> Reports { get; set; }
+
         public static WordGameDbContext Create()
         {
             return new WordGameDbContext();

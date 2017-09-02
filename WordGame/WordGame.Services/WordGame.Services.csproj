@@ -81,8 +81,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IReportService.cs" />
     <Compile Include="Contracts\IThreadService.cs" />
     <Compile Include="Contracts\IUserService.cs" />
+    <Compile Include="ReportService.cs" />
     <Compile Include="ThreadService.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="Utilities\Contracts\IQuestionUtility.cs" />
