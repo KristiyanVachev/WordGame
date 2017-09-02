@@ -50,12 +50,47 @@ namespace WordGame.Controllers
             {
                 this.reportService.Create(authKey, newReport.WordId);
             }
-            catch (InstanceNotFoundException)
+            catch (Exception)
             {
                 return Task.FromResult(Request.CreateResponse(HttpStatusCode.Unauthorized));
             }
 
             return Task.FromResult(Request.CreateResponse(HttpStatusCode.Created));
         }
+
+        [Route("api/reports")]
+        [HttpGet]
+        public Task<HttpResponseMessage> Reports()
+        {
+            IEnumerable<string> headerValues;
+
+            try
+            {
+                headerValues = Request.Headers.GetValues("AuthKey");
+
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(Request.CreateResponse(HttpStatusCode.Unauthorized));
+            }
+
+            var authKey = headerValues.FirstOrDefault();
+
+            IEnumerable<Report> reports;
+            try
+            {
+                reports = this.reportService.Reports(authKey);
+
+            }
+            catch (Exception)
+            {
+
+                return Task.FromResult(Request.CreateResponse(HttpStatusCode.Conflict));
+            }
+
+            return Task.FromResult(Request.CreateResponse(HttpStatusCode.OK, reports));
+
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Instrumentation;
 using Bytes2you.Validation;
@@ -59,6 +60,25 @@ namespace WordGame.Services
             this.unitOfWork.Commit();
 
             return report;
+        }
+
+        public IEnumerable<Report> Reports(string authKey)
+        {
+            var user = this.userRepository.Entities.FirstOrDefault(x => x.AuthKey == authKey);
+
+            if (user == null || !user.IsAdmin)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            var reports = this.reportRepository.Entities.ToList();
+
+            return reports;
+        }
+
+        public void Process(string authKey, int reportId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
