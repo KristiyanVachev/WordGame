@@ -57,7 +57,7 @@ namespace WordGame.Controllers
 
         [Route("api/threads/{id}/words")]
         [HttpPost]
-        public Task<HttpResponseMessage> Words(int id, [FromBody] NewPost newPost)
+        public Task<HttpResponseMessage> NewWord(int id, [FromBody] NewPost newPost)
         {
             IEnumerable<string> headerValues;
 
@@ -77,7 +77,7 @@ namespace WordGame.Controllers
             Post created;
             try
             {
-               created = this.threadService.AddWord(authKey, id, newPost.Word);
+                created = this.threadService.AddWord(authKey, id, newPost.Word);
 
             }
             catch (Exception)
@@ -87,5 +87,45 @@ namespace WordGame.Controllers
 
             return Task.FromResult(Request.CreateResponse(HttpStatusCode.Created, created.Word));
         }
+
+        [Route("api/threads/{id}/words/{skip?}/{take?}")]
+        [HttpGet]
+        public Task<HttpResponseMessage> Words(int id, int skip = 0, int take = 10)
+        {
+            IEnumerable<string> headerValues;
+
+            try
+            {
+                headerValues = Request.Headers.GetValues("AuthKey");
+
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(Request.CreateResponse(HttpStatusCode.Unauthorized));
+            }
+
+            var authKey = headerValues.FirstOrDefault();
+
+
+            IEnumerable<Post> posts;
+            try
+            {
+               posts = this.threadService.Posts(authKey, id, skip, take);
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(Request.CreateResponse(HttpStatusCode.Forbidden));
+            }
+
+            IList<PostResponse> response = new List<PostResponse>();
+
+            foreach (var post in posts)
+            {
+                response.Add(new PostResponse {Id = post.Id, Word = post.Word, Author = post.User.UserName});
+            }
+
+            return Task.FromResult(Request.CreateResponse(HttpStatusCode.OK, response));
+        }
+
     }
 }

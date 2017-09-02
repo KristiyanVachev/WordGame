@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Instrumentation;
 using Bytes2you.Validation;
@@ -42,7 +43,7 @@ namespace WordGame.Services
 
             if (user == null)
             {
-                throw new InstanceNotFoundException();
+                throw new UnauthorizedAccessException();
             }
 
             var thread = this.threadFactory.CreateThread(user.Id, name);
@@ -64,7 +65,7 @@ namespace WordGame.Services
 
             if (user == null)
             {
-                throw new InstanceNotFoundException();
+                throw new UnauthorizedAccessException();
             }
 
             var thread = this.threadRepository.GetById(threadId);
@@ -94,6 +95,25 @@ namespace WordGame.Services
             this.unitOfWork.Commit();
 
             return newPost;
+        }
+
+        public IEnumerable<Post> Posts(string authKey, int threadId, int skip, int take)
+        {
+            var user = this.userRepository.Entities.FirstOrDefault(x => x.AuthKey == authKey);
+
+            if (user == null)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            var thread = threadRepository.GetById(threadId);
+
+            if (thread == null)
+            {
+                throw new InstanceNotFoundException();
+            }
+
+            return thread.Posts.Skip(skip).Take(take).ToList();
         }
     }
 }

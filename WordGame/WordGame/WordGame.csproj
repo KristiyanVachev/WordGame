@@ -219,6 +219,7 @@
     <Compile Include="Models\RegisteredUser.cs" />
     <Compile Include="Models\Threads\NewPost.cs" />
     <Compile Include="Models\Threads\NewThread.cs" />
+    <Compile Include="Models\Threads\Responses\PostResponse.cs" />
     <Compile Include="Models\Threads\Responses\ThreadResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
