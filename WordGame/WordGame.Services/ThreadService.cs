@@ -79,6 +79,13 @@ namespace WordGame.Services
                 throw new Exception();
             }
 
+            string lastWord = thread.Posts.LastOrDefault().Word;
+
+            if (lastWord[lastWord.Length -1] != word[0])
+            {
+                throw new ArgumentException();
+            }
+
             //TODO banned word
 
             var newPost = this.threadFactory.CreatePost(user.Id, threadId, word);
