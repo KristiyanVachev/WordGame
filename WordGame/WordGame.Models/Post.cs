@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WordGame.Models
 {
     public class Post
     {
+        public Post()
+        {
+            
+        }
+
         public Post(int userId, int threadId, string word)
         {
             this.UserId = userId;

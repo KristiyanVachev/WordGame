@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Management.Instrumentation;
 using Bytes2you.Validation;
 using WordGame.Data.Contracts;
@@ -48,11 +49,44 @@ namespace WordGame.Services
 
             var firstPost = this.threadFactory.CreatePost(user.Id, thread.Id, firstWord);
 
+            thread.Posts.Add(firstPost);
+
             this.threadRepository.Add(thread);
             this.postRepository.Add(firstPost);
             this.unitOfWork.Commit();
 
             return thread;
+        }
+
+        public Post AddWord(string authKey, int threadId, string word)
+        {
+            var user = this.userRepository.Entities.FirstOrDefault(x => x.AuthKey == authKey);
+
+            if (user == null)
+            {
+                throw new InstanceNotFoundException();
+            }
+
+            var thread = this.threadRepository.GetById(threadId);
+
+            if (thread == null)
+            {
+                throw new InstanceNotFoundException();
+            }
+
+            if (thread.Posts.Any(x => x.Word == word))
+            {
+                throw new Exception();
+            }
+
+            //TODO banned word
+
+            var newPost = this.threadFactory.CreatePost(user.Id, threadId, word);
+
+            this.postRepository.Add(newPost);
+            this.unitOfWork.Commit();
+
+            return newPost;
         }
     }
 }

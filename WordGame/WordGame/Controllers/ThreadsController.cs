@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Management.Instrumentation;
 using System.Net;
 using System.Net.Http;
@@ -7,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using WordGame.Models;
 using WordGame.Models.Threads;
+using WordGame.Models.Threads.Responses;
 using WordGame.Services.Contracts;
 
 namespace WordGame.Controllers
@@ -40,7 +43,49 @@ namespace WordGame.Controllers
                 return Task.FromResult(Request.CreateResponse(HttpStatusCode.Unauthorized));
             }
 
-            return Task.FromResult(Request.CreateResponse(HttpStatusCode.Created, thread));
+            ThreadResponse response = new ThreadResponse
+            {
+                Id = thread.Id,
+                Name = thread.Name,
+                WordCount = thread.Posts.Count,
+                Word = thread.Posts.FirstOrDefault().Word,
+                Author = thread.User.UserName
+            };
+
+            return Task.FromResult(Request.CreateResponse(HttpStatusCode.Created, response));
+        }
+
+        [Route("api/threads/{id}/words")]
+        [HttpPost]
+        public Task<HttpResponseMessage> Words(int id, [FromBody] NewPost newPost)
+        {
+            IEnumerable<string> headerValues;
+
+            try
+            {
+                headerValues = Request.Headers.GetValues("AuthKey");
+
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(Request.CreateResponse(HttpStatusCode.Unauthorized));
+            }
+
+            var authKey = headerValues.FirstOrDefault();
+
+
+            Post created;
+            try
+            {
+               created = this.threadService.AddWord(authKey, id, newPost.Word);
+
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(Request.CreateResponse(HttpStatusCode.Forbidden));
+            }
+
+            return Task.FromResult(Request.CreateResponse(HttpStatusCode.Created, created.Word));
         }
     }
 }
